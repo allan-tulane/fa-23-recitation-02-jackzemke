@@ -8,6 +8,10 @@ import time
 ###
 
 def simple_work_calc(n, a, b):
+	if n < b:
+		return n
+	else:
+		return (a * simple_work_calc(n/b,a,b)) + n
 	"""Compute the value of the recurrence $W(n) = aW(n/b) + n
 
 	Params:
@@ -17,10 +21,16 @@ def simple_work_calc(n, a, b):
 
 	Returns: the value of W(n).
 	"""
-	# TODO
-	pass
+
+# print(simple_work_calc(10, 2, 2))
+# print(simple_work_calc(20, 3, 2))
+# print(simple_work_calc(30, 4, 2))
 
 def work_calc(n, a, b, f):
+	if n < b:
+		return f(n)
+	else:
+		return (a * work_calc(n/b,a,b,f)) + f(n)
 	"""Compute the value of the recurrence $W(n) = aW(n/b) + f(n)
 
 	Params:
@@ -32,10 +42,16 @@ def work_calc(n, a, b, f):
 
 	Returns: the value of W(n).
 	"""
-	# TODO
-	pass
+# print(work_calc(10, 2, 2,lambda n: 1))
+# print(work_calc(20, 1, 2, lambda n: n*n))
+# print(work_calc(30, 3, 2, lambda n: n))
+
 
 def span_calc(n, a, b, f):
+	if n < b:
+		return 0
+	else:
+		return (span_calc(n/b,a,b,f)) + 2
 	"""Compute the span associated with the recurrence $W(n) = aW(n/b) + f(n)
 
 	Params:
@@ -47,8 +63,8 @@ def span_calc(n, a, b, f):
 
 	Returns: the value of W(n).
 	"""
-	# TODO
-	pass
+
+# print(span_calc(20,2,2,1))
 
 
 
@@ -63,7 +79,7 @@ def compare_work(work_fn1, work_fn2, sizes=[10, 20, 50, 100, 1000, 5000, 10000])
 	
 	"""
 	result = []
-	for n in input_sizes:
+	for n in sizes:
 		# compute W(n) using current a, b, f
 		result.append((
 			n,
@@ -80,14 +96,33 @@ def print_results(results):
 							tablefmt="github"))
 
 def test_compare_work():
+	def work_fn1(n):
+		return work_calc(n, 1, 2, lambda n: n*n)
+	def work_fn2(n):
+		return work_calc(n, 3, 2, lambda n: n)
 	# curry work_calc to create multiple work
 	# functions taht can be passed to compare_work
     
 	# create work_fn1
 	# create work_fn2
 
-    res = compare_work(work_fn1, work_fn2)
-	print(res)
+	res = compare_work(work_fn1, work_fn2)
+	print_results(res)
+# print(test_compare_work())
 
 def test_compare_span():
-	# TODO
+	result = []
+	for n in [10, 20, 50, 100, 1000, 5000, 10000]:
+		# compute span(n) using current a, b, f
+		result.append((
+			n,
+			span_calc(n, 2, 2, 1),
+			span_calc(n, 3, 3, 1)
+			))
+	print(tabulate.tabulate(result,
+							headers=['n', 'S_1', 'S_2'],
+							floatfmt=".3f",
+							tablefmt="github"))
+	return result
+
+# print(test_compare_span())
