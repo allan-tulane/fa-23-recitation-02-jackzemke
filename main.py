@@ -25,6 +25,9 @@ def simple_work_calc(n, a, b):
 # print(simple_work_calc(10, 2, 2))
 # print(simple_work_calc(20, 3, 2))
 # print(simple_work_calc(30, 4, 2))
+# print(simple_work_calc(10, 5, 2))
+# print(simple_work_calc(20, 4, 2))
+# print(simple_work_calc(30, 3, 2))
 
 def work_calc(n, a, b, f):
 	if n < b:
@@ -42,16 +45,18 @@ def work_calc(n, a, b, f):
 
 	Returns: the value of W(n).
 	"""
-# print(work_calc(10, 2, 2,lambda n: 1))
-# print(work_calc(20, 1, 2, lambda n: n*n))
-# print(work_calc(30, 3, 2, lambda n: n))
-
+print(work_calc(10, 2, 2,lambda n: 1))
+print(work_calc(20, 1, 2, lambda n: n*n))
+print(work_calc(30, 3, 2, lambda n: n))
+print(work_calc(10, 5, 2,lambda n: 1))
+print(work_calc(20, 4, 2, lambda n: n*n))
+print(work_calc(30, 2, 2, lambda n: n))
 
 def span_calc(n, a, b, f):
 	if n < b:
 		return 0
 	else:
-		return (span_calc(n/b,a,b,f)) + 2
+		return (span_calc(n/b,a,b,f)) + 1
 	"""Compute the span associated with the recurrence $W(n) = aW(n/b) + f(n)
 
 	Params:
@@ -64,7 +69,7 @@ def span_calc(n, a, b, f):
 	Returns: the value of W(n).
 	"""
 
-# print(span_calc(20,2,2,1))
+# print(span_calc( 20,2,2,1))
 
 
 
@@ -97,9 +102,9 @@ def print_results(results):
 
 def test_compare_work():
 	def work_fn1(n):
-		return work_calc(n, 1, 2, lambda n: n*n)
+		return work_calc(n, 4, 2, lambda n: n**3)
 	def work_fn2(n):
-		return work_calc(n, 3, 2, lambda n: n)
+		return work_calc(n, 2, 32, lambda n: n**4)
 	# curry work_calc to create multiple work
 	# functions taht can be passed to compare_work
     
